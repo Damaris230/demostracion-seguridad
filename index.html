@@ -27,7 +27,21 @@
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        
+        /* EFECTO DE PARPADEO ROJO DE FONDO */
+        @keyframes fondoAlerta {
+            0% { background-color: rgba(255, 0, 0, 0.1); }
+            50% { background-color: rgba(255, 0, 0, 0.4); }
+            100% { background-color: rgba(255, 0, 0, 0.1); }
+        }
+        
+        .fondo-alerta {
+            animation: fondoAlerta 0.5s infinite;
+        }
+        
         .wifi-icon {
             font-size: 80px;
             margin-bottom: 20px;
@@ -41,87 +55,223 @@
             color: #666;
             margin-bottom: 30px;
         }
+        
+        /* ALERTA ROJA CON PARPADEO */
         .alerta {
-            background: #ff4757;
+            background: #ff0000;
             color: white;
             padding: 25px;
             border-radius: 15px;
             display: none;
-            animation: shake 0.5s;
             margin: 20px 0;
+            position: relative;
+            animation: parpadeoAlerta 0.5s infinite;
+            border: 5px solid #cc0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
         }
+        
+        @keyframes parpadeoAlerta {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.02); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
         .alerta h2 {
-            font-size: 24px;
+            font-size: 32px;
             margin-bottom: 10px;
+            animation: parpadeoTexto 0.3s infinite;
         }
+        
+        @keyframes parpadeoTexto {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        .alerta .icono-peligro {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 10px;
+            animation: girar 2s linear infinite;
+        }
+        
+        @keyframes girar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         .alerta p {
-            font-size: 16px;
-            opacity: 0.9;
+            font-size: 18px;
+            margin: 10px 0;
+            font-weight: bold;
         }
+        
+        .alerta .sub-alerta {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        /* BARRA DE PROGRESO DE "INFECCIÓN" */
+        .barra-container {
+            background: #333;
+            border-radius: 10px;
+            height: 25px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .barra-progreso {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000, #ff6600, #ff0000);
+            background-size: 200% 100%;
+            animation: moverBarra 1s linear infinite;
+            width: 0%;
+            transition: width 0.5s;
+            border-radius: 10px;
+        }
+        
+        @keyframes moverBarra {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+        
+        /* MENSAJE DE BROMO */
         .broma {
             background: #2ed573;
             color: white;
-            padding: 25px;
+            padding: 30px;
             border-radius: 15px;
             display: none;
             margin: 20px 0;
+            animation: aparecer 0.5s;
         }
+        
+        @keyframes aparecer {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
         .broma h2 {
-            font-size: 28px;
+            font-size: 32px;
             margin-bottom: 10px;
         }
-        .broma p {
-            font-size: 16px;
-            opacity: 0.9;
+        
+        .broma .emoji-grande {
+            font-size: 80px;
+            display: block;
+            margin-bottom: 15px;
         }
+        
         .loading {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #667eea;
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 20px auto;
             display: none;
         }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
+        
         .footer {
             margin-top: 30px;
             font-size: 12px;
             color: #999;
         }
+        
+        /* CONTADOR */
+        .contador {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff0000;
+            margin: 10px 0;
+            display: none;
+            animation: parpadeoTexto 0.5s infinite;
+        }
+        
+        /* SONIDO VISUAL */
+        .onda-sonido {
+            display: none;
+            justify-content: center;
+            gap: 5px;
+            margin: 15px 0;
+        }
+        
+        .onda-sonido span {
+            width: 8px;
+            background: #ff0000;
+            border-radius: 5px;
+            animation: onda 0.5s infinite alternate;
+        }
+        
+        .onda-sonido span:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .onda-sonido span:nth-child(2) { height: 35px; animation-delay: 0.1s; }
+        .onda-sonido span:nth-child(3) { height: 50px; animation-delay: 0.2s; }
+        .onda-sonido span:nth-child(4) { height: 35px; animation-delay: 0.3s; }
+        .onda-sonido span:nth-child(5) { height: 20px; animation-delay: 0.4s; }
+        
+        @keyframes onda {
+            0% { transform: scaleY(0.5); }
+            100% { transform: scaleY(1); }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="container">
         <div class="wifi-icon">📶</div>
         <h1>WiFi Gratis</h1>
         <p class="subtitle">Conéctate a internet de alta velocidad</p>
         
         <div id="loading" class="loading"></div>
         
-        <div id="alerta" class="alerta">
-            <h2>⚠️ ¡PRECAUCIÓN!</h2>
-            <p>Tu dispositivo ha sido detectado en una red insegura<br>
-            Posible riesgo de seguridad identificado</p>
-            <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
-            🔒 No ingreses datos personales</p>
+        <!-- BARRA DE PROGRESO -->
+        <div id="barraContainer" class="barra-container">
+            <div id="barraProgreso" class="barra-progreso"></div>
         </div>
         
+        <!-- CONTADOR -->
+        <div id="contador" class="contador">5</div>
+        
+        <!-- ONDA DE SONIDO -->
+        <div id="ondaSonido" class="onda-sonido">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        
+        <!-- ALERTA ROJA -->
+        <div id="alerta" class="alerta">
+            <span class="icono-peligro">🚨</span>
+            <h2>⚠️ ¡ALERTA! ¡ALERTA!</h2>
+            <p>🔴 PELIGRO DETECTADO 🔴</p>
+            <p style="font-size: 14px;">Tu dispositivo está siendo escaneado</p>
+            <div class="sub-alerta">
+                📱 IP: 192.168.1.105<br>
+                🖥️ Dispositivo: Samsung Galaxy<br>
+                ⚡ Riesgo: CRÍTICO
+            </div>
+        </div>
+        
+        <!-- MENSAJE DE BROMO -->
         <div id="broma" class="broma">
+            <span class="emoji-grande">😄</span>
             <h2>🎉 ¡ES UNA BROMA!</h2>
-            <p>Esta es una demostración de seguridad<br>
-            Tu teléfono está completamente seguro</p>
-            <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
-            ✅ No escanees códigos QR desconocidos</p>
+            <p>Esta es una demostración de seguridad</p>
+            <p style="font-size: 14px; margin-top: 15px; opacity: 0.9;">
+                ✅ Tu teléfono está 100% seguro<br>
+                ✅ No se ha instalado nada<br>
+                ✅ Esto es solo HTML y CSS
+            </p>
+            <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                📚 Lección: No escanees códigos QR desconocidos
+            </div>
         </div>
         
         <div class="footer">
@@ -130,22 +280,119 @@
     </div>
 
     <script>
-        // Mostrar loading después de 1 segundo
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'block';
-        }, 1000);
+        // Variable para controlar el contador
+        let segundos = 5;
+        const contadorElement = document.getElementById('contador');
+        const alertaElement = document.getElementById('alerta');
+        const bromaElement = document.getElementById('broma');
+        const loadingElement = document.getElementById('loading');
+        const barraContainer = document.getElementById('barraContainer');
+        const barraProgreso = document.getElementById('barraProgreso');
+        const ondaSonido = document.getElementById('ondaSonido');
+        const container = document.getElementById('container');
         
-        // Mostrar alerta después de 3 segundos
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('alerta').style.display = 'block';
-        }, 3000);
+        // MOSTRAR LOADING
+        loadingElement.style.display = 'block';
         
-        // Mostrar mensaje de broma después de 8 segundos
+        // PASO 1: Después de 2 segundos, mostrar barra de progreso
         setTimeout(() => {
-            document.getElementById('alerta').style.display = 'none';
-            document.getElementById('broma').style.display = 'block';
-        }, 8000);
+            loadingElement.style.display = 'none';
+            barraContainer.style.display = 'block';
+            ondaSonido.style.display = 'flex';
+            
+            // Animar barra de progreso
+            let progreso = 0;
+            const intervaloBarra = setInterval(() => {
+                progreso += 2;
+                if (progreso <= 100) {
+                    barraProgreso.style.width = progreso + '%';
+                } else {
+                    clearInterval(intervaloBarra);
+                }
+            }, 80);
+            
+        }, 2000);
+        
+        // PASO 2: Mostrar contador regresivo (5,4,3,2,1)
+        setTimeout(() => {
+            contadorElement.style.display = 'block';
+            
+            const intervaloContador = setInterval(() => {
+                segundos--;
+                contadorElement.textContent = segundos;
+                
+                if (segundos <= 0) {
+                    clearInterval(intervaloContador);
+                    contadorElement.style.display = 'none';
+                    
+                    // PASO 3: Mostrar ALERTA ROJA con efecto de fondo
+                    alertaElement.style.display = 'block';
+                    container.classList.add('fondo-alerta');
+                    ondaSonido.style.display = 'flex';
+                    
+                    // Hacer vibrar el teléfono si es posible
+                    if (navigator.vibrate) {
+                        navigator.vibrate([200, 100, 200, 100, 500]);
+                    }
+                    
+                    // Cambiar título de la página
+                    document.title = "🚨 ¡ALERTA! ¡ALERTA! 🚨";
+                    
+                    // PASO 4: Después de 10 segundos, mostrar BROMO
+                    setTimeout(() => {
+                        alertaElement.style.display = 'none';
+                        container.classList.remove('fondo-alerta');
+                        ondaSonido.style.display = 'none';
+                        bromaElement.style.display = 'block';
+                        document.title = "😂 ¡Es una broma!";
+                        
+                        // Efecto de confeti con emojis
+                        const emojis = ['🎉', '✨', '🌟', '💫', '🎊'];
+                        for (let i = 0; i < 20; i++) {
+                            setTimeout(() => {
+                                const span = document.createElement('span');
+                                span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                                span.style.position = 'fixed';
+                                span.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                                span.style.left = Math.random() * 100 + '%';
+                                span.style.top = '-10%';
+                                span.style.animation = `caer ${Math.random() * 3 + 2}s linear`;
+                                span.style.pointerEvents = 'none';
+                                document.body.appendChild(span);
+                                
+                                setTimeout(() => {
+                                    span.remove();
+                                }, 5000);
+                            }, i * 100);
+                        }
+                        
+                        // CSS para la animación de caída
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            @keyframes caer {
+                                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                        
+                    }, 10000); // 10 segundos de alerta
+                    
+                }
+            }, 1000);
+            
+        }, 4000); // Esperar 4 segundos para empezar el contador
+        
+        // Efecto de sonido visual - hacer parpadear más rápido
+        setInterval(() => {
+            const alerta = document.getElementById('alerta');
+            if (alerta.style.display === 'block') {
+                // Cambiar intensidad del parpadeo
+                const intensity = Math.random() * 0.5 + 0.5;
+                alerta.style.opacity = intensity;
+            }
+        }, 200);
+        
     </script>
 </body>
 </html>
